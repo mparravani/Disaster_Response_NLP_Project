@@ -1,17 +1,61 @@
-import sys
+# import libraries
 
+import sys
+import pandas as pd
+import sqlite3
 
 def load_data(messages_filepath, categories_filepath):
-    pass
+    """
+    Load Data
+    
+    This function loads the messages and cateories data located at the provided file path. 
+    A merged data frame is returned.
+    """
+    messages = pd.read_csv(messages_filepath)
+    categories = pd.read_csv(categories_filepath)
+        
+    return messages.merge(categories, on = 'id')
 
 
 def clean_data(df):
-    pass
+    """
+    Clean Data
+    
+    This function cleanes the combined datasets:
+        -Categories are extracted with each established as a column
+        -Duplicates are Dropped
+        -data issues are fixed (instances where "2" is present, when data should be binary)
+    A merged data frame is returned.
+    """    
+    
+    #split categories into its own table
+    categories=df.categories.str.split(';',expand=True)
+    row = categories.iloc[1,:]
+    category_colnames = row.apply(lambda x: x[:-2])
+    categories.columns = category_colnames
+    
+    for column in categories:
+        # set each value to be the last character of the string
+        categories[column] = categories[column].apply(lambda x: x[-1])
 
+        # convert column from string to numeric
+        categories[column] = categories[column].astype(int)
+    
+
+    #items listed as 2 (should all be binary)
+    categories.replace(2,1,inplace = True)
+    
+    # drop the original categories column from `df`
+    df.drop(columns='categories', inplace=True)
+
+    #merge categories data back to original df
+    df = pd.concat([df,categories],axis=1)
+    df.drop_duplicates(subset = ['message'], inplace = True)
 
 def save_data(df, database_filename):
-    pass  
-
+    cxn = sqlite3.connect(database_filename)
+    df.to_sql('messages_cleaned', cxn, if_exists='replace',index=False)
+      
 
 def main():
     if len(sys.argv) == 4:
