@@ -89,7 +89,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     
     scores = []
     for i in range(0,36):
-        tmp=precision_recall_fscore_support(y_test.iloc[:,i], y_pred.iloc[:,i], average='binary')
+        tmp=precision_recall_fscore_support(Y_test.iloc[:,i], y_pred.iloc[:,i], average='binary')
         scores.append(tmp)
     scores = pd.DataFrame(scores)
     scores.columns = ['precision','recall','fscore','support']
