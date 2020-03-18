@@ -31,7 +31,7 @@ def load_data(database_filepath):
     """
     
     cxn = sqlite3.connect(database_filepath)
-    df = pd.read_sql_table('messages_cleaned', engine)
+    df = pd.read_sql('select * from messages_cleaned', cxn)
     X = df.iloc[:,1]
     y = df.iloc[:,4:]
     category_names = list(y.columns)
@@ -109,7 +109,7 @@ def save_model(model, model_filepath):
     """
     pkl = open(model_filepath, 'wb')
     pickle.dump(model, pkl)
-    modelpkl.close()
+    pkl.close()
 
 
 def main():
