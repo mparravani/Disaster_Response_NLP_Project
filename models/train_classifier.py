@@ -58,8 +58,7 @@ def tokenize(text):
 
 def build_model():
     """
-    Instantiates model and returns gridsearch model of pipeline
-
+    Instantiates model and returns gridsearch model inclusive of transformer pipeline
     """
 
     with parallel_backend('multiprocessing'):
@@ -71,11 +70,11 @@ def build_model():
             ])
 
         parameters = {
-            #'vect__ngram_range': ((1, 1), (1, 2)),
-            #'vect__max_df': (0.5, 0.75),
+            # 'vect__ngram_range': ((1, 1), (1, 2)),
+            'vect__max_df': (0.5, 0.75),
             #'vect__max_features': (None, 5000, 10000),
             #'tfidf__use_idf': (True, False),
-            #'clf__estimator__n_estimators': [10, 50],
+            'clf__estimator__n_estimators': [10, 50],
             #'clf__estimator__max_depth': [10, 20]
             }
 

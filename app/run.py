@@ -1,6 +1,7 @@
 import json
 import plotly
 import pandas as pd
+import sqlite3
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -26,12 +27,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('../data/disaster_messages.csv')
-df = pd.read_sql_table('messages_cleaned', engine)
+cxn = sqlite3.connect('../data/dsnd_disaster.db')
+df = pd.read_sql('select * from messages_cleaned', cxn)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
-
+model = joblib.load("../models/pipelinemodel.pkl")
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
