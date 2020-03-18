@@ -31,7 +31,7 @@ def load_data(database_filepath):
     """
     
     cxn = sqlite3.connect(database_filepath)
-    df = pd.read_sql('select * from messages', cxn)
+    df = pd.read_sql_table('messages_cleaned', engine)
     X = df.iloc[:,1]
     y = df.iloc[:,4:]
     category_names = list(y.columns)
@@ -72,11 +72,11 @@ def build_model():
 
         parameters = {
             #'vect__ngram_range': ((1, 1), (1, 2)),
-            'vect__max_df': (0.5, 0.75),
+            #'vect__max_df': (0.5, 0.75),
             #'vect__max_features': (None, 5000, 10000),
             #'tfidf__use_idf': (True, False),
             #'clf__estimator__n_estimators': [10, 50],
-            'clf__estimator__max_depth': [10, 20]
+            #'clf__estimator__max_depth': [10, 20]
             }
 
         return GridSearchCV(pipeline, param_grid=parameters,  cv=5, n_jobs=-1, scoring='f1_weighted')
@@ -107,7 +107,9 @@ def save_model(model, model_filepath):
     """
     Saves model as pickel file to specified location
     """
-    pickle.dump(model, model_filepath)
+    pkl = open(model_filepath, 'wb')
+    pickle.dump(model, pkl)
+    modelpkl.close()
 
 
 def main():
