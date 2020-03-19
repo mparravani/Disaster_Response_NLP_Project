@@ -1,8 +1,15 @@
 # Disaster Response Pipeline Project
 Project completed as part of a Udacity Data Science course.
 
-## Requirements:
+## Prerequisites 
 
+The following packages are required;   
+sklearn, plotly, nltk, sqlite3, xgboost, pandas, joblib, flask, joblib, sqlalchemy
+ 
+Install using the code below  
+```
+!pip install sklearn, plotly, nltk, sqlite3, xgboost, pandas, joblib, flask, joblib, sqlalchemy
+```
 
 ## Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
