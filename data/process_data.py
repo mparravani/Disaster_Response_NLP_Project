@@ -51,6 +51,7 @@ def clean_data(df):
     #merge categories data back to original df
     df = pd.concat([df,categories],axis=1)
     df.drop_duplicates(subset = ['message'], inplace = True)
+    return df
 
 def save_data(df, database_filename):
     cxn = sqlite3.connect(database_filename)
@@ -65,10 +66,10 @@ def main():
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
         df = load_data(messages_filepath, categories_filepath)
-
+        
         print('Cleaning data...')
         df = clean_data(df)
-        
+
         print('Saving data...\n    DATABASE: {}'.format(database_filepath))
         save_data(df, database_filepath)
         

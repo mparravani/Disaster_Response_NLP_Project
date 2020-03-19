@@ -1,6 +1,10 @@
 # Disaster Response Pipeline Project
+Project completed as part of a Udacity Data Science course.
 
-### Instructions:
+## Requirements:
+
+
+## Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database

@@ -27,11 +27,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-cxn = sqlite3.connect('../data/dsnd_disaster.db')
+cxn = sqlite3.connect('data/DisasterResponse.db')
 df = pd.read_sql('select * from messages_cleaned', cxn)
 
 # load model
-model = joblib.load("../models/pipelinemodel.pkl")
+model = joblib.load("models/classifier.pkl")
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
